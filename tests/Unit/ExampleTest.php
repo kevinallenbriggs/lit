@@ -2,17 +2,29 @@
 
 namespace Tests\Unit;
 
-use PHPUnit\Framework\TestCase;
+use App\User;
+use Tests\TestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ExampleTest extends TestCase
 {
+    use RefreshDatabase;
+
     /**
      * A basic test example.
      *
      * @return void
      */
     public function testBasicTest()
-    {
-        $this->assertTrue(true);
+    {   
+        $userAttributes = [
+            'name' => 'test name',
+            'email' => 'test@email.com'
+        ];
+
+        factory(User::class)->create($userAttributes);
+
+        $this->assertDatabaseHas('users', $userAttributes);
+        
     }
 }
